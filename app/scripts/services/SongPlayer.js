@@ -2,6 +2,11 @@
     function SongPlayer() {
         var SongPlayer = {};
 
+        /**
+         * @desc Current song
+         * @type {Object}
+         */
+
         var currentSong = null;
 
         /**
@@ -31,17 +36,39 @@
             currentSong = song;
         };
 
+        /**
+         * @function playSong
+         * @desc Plays whatever file is currentBuzzObject and changes status to playing
+         * @param {Object} song
+         */
+
+        var playSong = function(song) {
+            currentBuzzObject.play();
+            song.playing = true;
+        };
+
+        /**
+         * @function SongPlayer.play
+         * @desc Changes song status to playing, if new song - plays new song, if paused, plays paused song
+         * @param {Object} song
+         */
+
         SongPlayer.play = function(song) {
             if (currentSong !== song) {
                 setSong(song);
-                currentBuzzObject.play();
-                song.playing = true;
+                playSong(song);
             } else if (currentSong === song) {
                 if (currentBuzzObject.isPaused()) {
-                    currentBuzzObject.play();
+                    playSong(song);
                 }
             }
         };
+
+        /**
+         * @function SongPlayer.pause
+         * @desc Pauses current song and changes song status to reflect that
+         * @param {Object} song
+         */
 
         SongPlayer.pause = function(song) {
             currentBuzzObject.pause();
